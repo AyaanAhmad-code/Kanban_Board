@@ -51,7 +51,7 @@ function updateTaskCount(){
 if (localStorage.getItem("tasks")) {
   const data = JSON.parse(localStorage.getItem("tasks"));
   for (const col in data) {
-    const column = document.querySelector(`#${col}`);
+    const column = document.querySelectorAll(`#${col}`);
     data.forEach((task) => {
       addTask(task.title, task.description,column)
     });
