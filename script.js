@@ -51,12 +51,14 @@ function updateTaskCount(){
 
 if (localStorage.getItem("tasks")) {
   const data = JSON.parse(localStorage.getItem("tasks"));
-  for (const col in data) {
-    const column = document.querySelector(`#${col}`);
-    data[col].forEach((task) => {
-      addTask(task.title, task.description,column)
-    });
-  }
+  columns.forEach((column)=>{
+    const colId = column.id;
+    if(data[colId]){
+      data[colId].forEach((task)=>{
+        addTask(task.title,task.description,column)
+      })
+    }
+  })
   updateTaskCount();
 }
 
