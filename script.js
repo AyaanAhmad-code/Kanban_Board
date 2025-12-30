@@ -6,7 +6,8 @@ const done = document.querySelector("#done");
 let dragElement = null;
 const columns = [todo, progress, done];
 
-function addTask(title, desc, column) {
+
+function addTask(title, description, column) {
   const div = document.createElement("div");
 
   div.classList.add("task");
@@ -14,7 +15,7 @@ function addTask(title, desc, column) {
 
   div.innerHTML = `
     <h2>${title}</h2>
-    <p>${desc}</p>
+    <p>${description}</p>
     <button>Delete</button>
     `;
 
@@ -23,7 +24,7 @@ function addTask(title, desc, column) {
     dragElement = div;
   });
 
-  const deleteButton = document.querySelector("button");
+  const deleteButton = div.querySelector("button");
   deleteButton.addEventListener("click",()=>{
     div.remove();
     updateTaskCount();
@@ -51,22 +52,17 @@ function updateTaskCount(){
 if (localStorage.getItem("tasks")) {
   const data = JSON.parse(localStorage.getItem("tasks"));
   for (const col in data) {
-    const column = document.querySelectorAll(`#${col}`);
-    data.forEach((task) => {
+    const column = document.querySelector(`#${col}`);
+    data[col].forEach((task) => {
       addTask(task.title, task.description,column)
     });
-
-    updateTaskCount();
   }
+  updateTaskCount();
 }
 
-const tasks = document.querySelectorAll(".task");
 
-tasks.forEach(function (task) {
-  task.addEventListener("drag", (e) => {
-    dragElement = task;
-  });
-});
+
+
 
 function addDragEventsOnColumn(column) {
   column.addEventListener("dragenter", (e) => {
